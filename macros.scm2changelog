@@ -1,0 +1,1 @@
+%scm_log_to_changelog %(%{_bindir}/git2changelog)
