@@ -1,1 +1,1 @@
-%scm_log_to_changelog %(%{_bindir}/git2changelog)
+%scm_log_to_changelog %(sed -i '/%%{scm_log_to_changelog}/d' %{name}.spec; %{_bindir}/git2changelog >> %{name}.spec)
