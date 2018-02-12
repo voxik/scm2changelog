@@ -1,6 +1,11 @@
 #!/bin/bash
 export LANG=C.UTF-8
 
+if ! git diff-index --quiet HEAD --; then
+  echo "Directory contains modifications, cannot proceed." >&2
+  exit 1
+fi
+
 workdir=$(mktemp -d "${TMPDIR:-/tmp/}$(basename $0).XXXXXXXXXXXX")
 
 repo_basename=$(basename "$PWD")
@@ -15,5 +20,7 @@ for h in $(git log --format=format:"%H"); do
 
   git log $h -1 --date=format:"%a %b %d %Y" --format=format:"* %ad %cn <%ce> - $version_release%n- %s%n%n"
 done
+
+git reset --hard 2>&1 > /dev/null
 
 rm -rf $workdir
