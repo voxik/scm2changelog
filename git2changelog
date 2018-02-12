@@ -10,7 +10,7 @@ for h in $(git log --format=format:"%H"); do
   specfile=$workdir/$h.spec
 
   git show $h:$repo_basename.spec > $specfile
-  sed -i '/%prep/,$d' $specfile
+  sed -i '/%changelog/,$d' $specfile
   version_release=$(rpmspec -q --undefine dist --queryformat '[%|epoch?{%{epoch}:}|%{version}-%{release}\n]' $specfile 2> /dev/null | head -1)
 
   git log $h -1 --date=format:"%a %b %d %Y" --format=format:"* %ad %cn <%ce> - $version_release%n- %s%n%n"
